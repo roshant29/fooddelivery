@@ -81,7 +81,7 @@ List<Map<String, Object>> fooditemsmap = [
     "foodname": "Pho",
     "image": "https://bing.com/th?id=OSK.be572d220fd69a895ea008afea381beb",
     "description":
-        "Vietnamese noodle soup made with a flavorful broth infused with spices"
+        "Vietnamese noodle soup made with a flavorful broth infused with spicess"
   },
   {
     "foodname": "Fish and Chips",
