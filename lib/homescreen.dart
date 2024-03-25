@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:ui1/buttons.dart';
 import 'package:ui1/json.dart';
 import 'package:ui1/provider/likebutton.dart';
+import 'package:ui1/provider/selectbutton.dart';
 import 'package:ui1/text.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,6 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final likeprovider = Provider.of<LikeProvider>(context, listen: false);
+    final buttonprovider = Provider.of<ButtonsProvider>(context, listen: false);
     final foodItems = createFoodItems();
     return Scaffold(
       body: Column(
@@ -85,23 +87,45 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.grey,
                           ),
                           //for post and reviews button
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Buttons(
-                                  text: 'Posts',
-                                  color: Colors.grey,
-                                  x: 20,
-                                  concolor: Colors.white),
-                              Buttons(
-                                  text: 'Reviews',
-                                  color: Colors.white,
-                                  x: 20,
-                                  concolor: Colors.orange)
-                            ],
-                          ),
+                          Consumer<ButtonsProvider>(
+                            builder: (context, indexes, child) => Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    buttonprovider.selectButton(0);
+                                  },
+                                  child: Buttons(
+                                    text: 'Posts',
+                                    color: buttonprovider.selectedButton == 0
+                                        ? Colors.white
+                                        : Colors.black,
+                                    x: 20,
+                                    concolor: buttonprovider.selectedButton == 0
+                                        ? Colors.orange
+                                        : Colors.white,
+                                  ),
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    buttonprovider.selectButton(1);
+                                  },
+                                  child: Buttons(
+                                    text: 'Reviews',
+                                    color: buttonprovider.selectedButton == 1
+                                        ? Colors.white
+                                        : Colors.black,
+                                    x: 20,
+                                    concolor: buttonprovider.selectedButton == 1
+                                        ? Colors.orange
+                                        : Colors.white,
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
                         ],
                       ),
                     ),
@@ -179,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           subtitle: Text1(
                             text: item.description,
                             color: Color.fromARGB(255, 102, 101, 101),
-                            x: 15,
+                            x: 13,
                           ),
                           leading: Image.network(
                             fit: BoxFit.cover,
